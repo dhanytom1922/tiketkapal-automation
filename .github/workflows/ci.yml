@@ -35,7 +35,7 @@ jobs:
           mkdir -p $HOME/android-sdk/cmdline-tools/latest
           mv cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-30" "system-images;android-30;google_apis;arm64-v8a" "emulator" "platform-tools"
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator" "platform-tools"
 
       - name: Set up environment variables
         run: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Create and Start Emulator
         run: |
-          echo no | $HOME/android-sdk/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a" --force
+          echo no | $HOME/android-sdk/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" --force
           emulator -avd test -noaudio -no-boot-anim -no-snapshot -no-skin -no-window &
           adb wait-for-device
           adb shell input keyevent 82
