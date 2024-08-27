@@ -10,11 +10,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -27,9 +22,26 @@ jobs:
 
       - name: Download APK
         run: |
-          curl -L -o app.apk https://github.com/dhanytom1922/tiketkapal-automation/releases/download/v1.0/tiketkapal-v1.0.5.apk
-        # Gantilah URL di atas dengan URL file APK yang sesuai jika Anda menggunakan GitHub Releases atau sumber lain.
+          curl -L -o app.apk https://github.com/dhanytom1922/tiketkapal-automation/releases/download/automation/tiketkapal-v1.0.5.apk
+
+      - name: Install Android SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jdk
+          sudo apt-get install -y android-sdk
+          sudo apt-get install -y android-tools-adb
+          yes | sdkmanager --licenses
+          sdkmanager "platforms;android-30" "system-images;android-30;google_apis;arm64-v8a"
+
+      - name: Start Emulator
+        run: |
+          echo no | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a" --force
+          emulator -avd test -noaudio -no-boot-anim -no-snapshot -no-skin -no-window &
+          adb wait-for-device
+          adb shell input keyevent 82
+          adb shell pm grant com.example.yourapp android.permission.WRITE_EXTERNAL_STORAGE
+          adb shell pm grant com.example.yourapp android.permission.READ_EXTERNAL_STORAGE
 
       - name: Run tests
         run: |
-          npx wdio run ./wdio.conf.js
+          npm run tom-ganteng
