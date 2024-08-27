@@ -1,0 +1,35 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install -g appium webdriverio
+
+      - name: Download APK
+        run: |
+          curl -L -o app.apk https://github.com/dhanytom1922/tiketkapal-automation/releases/download/v1.0/tiketkapal-v1.0.5.apk
+        # Gantilah URL di atas dengan URL file APK yang sesuai jika Anda menggunakan GitHub Releases atau sumber lain.
+
+      - name: Run tests
+        run: |
+          npx wdio run ./wdio.conf.js
