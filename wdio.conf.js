@@ -20,9 +20,9 @@ exports.config = {
         'appium:udid': 'emulator-5554',
         
         // Tambahan
-        'appium:avdLaunchTimeout': 180000, // Timeout tambahan untuk launching AVD
+        'appium:avdLaunchTimeout': 300000, // Timeout tambahan untuk launching AVD
         'appium:appWaitDuration': 50000, // Waktu tunggu tambahan saat menunggu aplikasi aktif
-        'appium:avdReadyTimeout': 180000, // Waktu tunggu tambahan hingga emulator siap
+        'appium:avdReadyTimeout': 300000, // Waktu tunggu tambahan hingga emulator siap
         'appium:skipDeviceInitialization': false, // Untuk performa lebih baik, tetap inisialisasi
         'appium:skipServerInstallation': false, // Pastikan server di-install setiap kali
         
