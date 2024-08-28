@@ -21,3 +21,4 @@ jobs:
             -w /usr/src/app \
             achmaddhany/tiketkapal:latest \
             sh -c "emulator -avd test -noaudio -no-boot-anim -no-snapshot -no-skin -no-window & adb wait-for-device && adb shell input keyevent 82 && adb shell pm grant com.example.yourapp android.permission.WRITE_EXTERNAL_STORAGE && adb shell pm grant com.example.yourapp android.permission.READ_EXTERNAL_STORAGE && appium & npx wdio run ./wdio.conf.js"
+# xx 
