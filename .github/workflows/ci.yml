@@ -10,23 +10,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: Dockerfile
-          push: false
-          tags: my-docker-image:latest
-
-      - name: Run Docker container
-        uses: docker://my-docker-image:latest
-        with:
-          entrypoint: /bin/bash
-          args: "-c 'emulator -avd test -noaudio -no-boot-anim -no-snapshot -no-skin -no-window & adb wait-for-device && adb shell input keyevent 82 && adb shell pm grant com.example.yourapp android.permission.WRITE_EXTERNAL_STORAGE && adb shell pm grant com.example.yourapp android.permission.READ_EXTERNAL_STORAGE && appium & npx wdio run ./wdio.conf.js'"
-
-      - name: Run tests
+      - name: Pull Docker image
         run: |
-          npx wdio run ./wdio.conf.js
+          docker pull achmaddhany/tiketkapal:latest
+
+      - name: Run Docker container and execute commands
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/usr/src/app \
+            -w /usr/src/app \
+            achmaddhany/tiketkapal:latest \
+            sh -c "emulator -avd test -noaudio -no-boot-anim -no-snapshot -no-skin -no-window & adb wait-for-device && adb shell input keyevent 82 && adb shell pm grant com.example.yourapp android.permission.WRITE_EXTERNAL_STORAGE && adb shell pm grant com.example.yourapp android.permission.READ_EXTERNAL_STORAGE && appium & npx wdio run ./wdio.conf.js"
