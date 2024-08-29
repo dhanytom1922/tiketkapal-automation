@@ -40,9 +40,16 @@ exports.config = {
             disableWebdriverScreenshotsReporting: false,
         }]
     ],
-    services: [
-        'appium',
-    ],
+    services: ['appium'],
+    appium: {
+        command: 'appium',
+        args: {
+           // Sesuaikan host dan port untuk emulator lokal
+            address: '127.0.0.1',
+            port: 4723,
+        },
+},
+
     mochaOpts: {
         ui: 'bdd',
         timeout: 60000
